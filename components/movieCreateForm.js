@@ -68,7 +68,19 @@ const MovieCreateForm = (props) => {
 				/>
 			</div>
 			<div className="form-group">
-				<label htmlFor="description">Rating</label>
+				<label htmlFor="releaseYear">Release Year</label>
+				<input
+					onChange={handleChange}
+					name="releaseYear"
+					value={form.releaseYear}
+					type="text"
+					className="form-control"
+					id="releaseYear"
+					placeholder="Release Year"
+				/>
+			</div>
+			<div className="form-group">
+				<label htmlFor="rating">Rating</label>
 				<input
 					onChange={handleChange}
 					name="rating"
@@ -84,6 +96,7 @@ const MovieCreateForm = (props) => {
 					Max: 5, Min: 0{' '}
 				</small>
 			</div>
+
 			<div className="form-group">
 				<label htmlFor="image">Image</label>
 				<input
@@ -112,8 +125,8 @@ const MovieCreateForm = (props) => {
 				<label htmlFor="longDesc">Long Description</label>
 				<textarea
 					onChange={handleChange}
-					name="longDescription"
-					value={form.longDescription}
+					name="longDesc"
+					value={form.longDesc}
 					className="form-control"
 					id="longDesc"
 					rows="3"

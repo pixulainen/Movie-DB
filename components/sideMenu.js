@@ -1,15 +1,15 @@
-import { useState } from 'react';
 import { useRouter } from 'next/router';
-import Modal from './modal';
-import MovieCreateForm from './movieCreateForm';
-import { createMovie } from '../actions';
+import React, { useRef } from 'react';
 
+import ModalX from './modal';
+import MovieCreateForm from './movieCreateForm';
+import { useCreateMovie } from '../actions/movies';
 const SideMenu = (props) => {
 	const { categories } = props;
-	let modal = null;
+	let modal = useRef(null);
 
 	const router = useRouter();
-
+	const [ createMovie, { data, loading, error } ] = useCreateMovie();
 	const handleCreateMovie = (movie) => {
 		createMovie(movie).then((movies) => {
 			modal.closeModal();
@@ -19,9 +19,10 @@ const SideMenu = (props) => {
 
 	return (
 		<div>
-			<Modal ref={(ele) => (modal = ele)} hasSubmit={false}>
+			<ModalX ref={(ele) => (modal = ele)} hasSubmit={false}>
 				<MovieCreateForm handleFormSubmit={handleCreateMovie} />
-			</Modal>
+				{error && <div className="alert alert-danger mt-2">{error}</div>}
+			</ModalX>
 
 			<h1 className="my-4">{props.appName}</h1>
 			<div className="list-group">

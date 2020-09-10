@@ -1,27 +1,26 @@
 import React from 'react';
 import Router from 'next/router';
 import MovieCreateForm from '../../../components/movieCreateForm';
-import { getMovieById, updateMovie } from '../../../actions/index';
+import { useGetMovie, useUpdateMovie } from '../../../actions/movies';
+import { useRouter } from 'next/router';
 
-class EditMovie extends React.Component {
-	static async getInitialProps({ query }) {
-		const movie = await getMovieById(query.id);
-		return { movie };
-	}
-	handleUpdateMovie = (movie) => {
-		updateMovie(movie).then((updatedMovie) => {
-			Router.push('/movies/[id]', `/movies/${movie.id}`);
-		});
+const EditMovie = () => {
+	const router = useRouter();
+	const { data: initialData, error, loading } = useGetMovie(router.query.id);
+	const [ updateMovie, { error: updateError } ] = useUpdateMovie();
+
+	const handleUpdateMovie = async (movie) => {
+		await updateMovie(router.query.id, movie);
+		Router.push('/movies/[id]', `/movies/${movie._id}`);
 	};
-	render() {
-		const { movie } = this.props;
-		return (
-			<div className="container">
-				<h1>Edit Movie</h1>
-				<MovieCreateForm initialData={movie} handleFormSubmit={this.handleUpdateMovie} submitButton="Update" />
-			</div>
-		);
-	}
-}
+	return (
+		<div className="container">
+			<h1>Edit Movie</h1>
+			{initialData && (
+				<MovieCreateForm initialData={initialData} handleFormSubmit={handleUpdateMovie} submitButton="Update" />
+			)}
+		</div>
+	);
+};
 
 export default EditMovie;
