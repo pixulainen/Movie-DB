@@ -1,67 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-class Modal extends React.Component {
-	constructor(props) {
-		super(props);
-		this.closeButton = React.createRef();
-	}
+const ModalComponent = (props) => {
+	const { buttonLabel, className, toggle, modal } = props;
 
-	closeModal() {
-		this.closeButton.click();
-	}
+	return (
+		<div>
+			<Button block color="primary" size="lg" onClick={toggle}>
+				{buttonLabel}
+			</Button>
+			<Modal scrollable fade={true} isOpen={modal} toggle={toggle} className={className}>
+				<ModalHeader toggle={toggle}>Create Movie</ModalHeader>
+				<ModalBody>{props.children}</ModalBody>
+				<ModalFooter>
+					{props.hasSubmit && (
+						<Button color="primary" onClick={toggle}>
+							Sumbit
+						</Button>
+					)}
+					<Button color="secondary" onClick={toggle}>
+						Cancel
+					</Button>
+				</ModalFooter>
+			</Modal>
+		</div>
+	);
+};
 
-	submitModal = () => {
-		alert('Submitting Modal');
-		this.closeModal();
-	};
-
-	render() {
-		return (
-			<div>
-				<button type="button" className="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-					Create Movie
-				</button>
-
-				<div
-					className="modal fade"
-					id="exampleModal"
-					tabIndex="-1"
-					role="dialog"
-					aria-labelledby="exampleModalLabel"
-					aria-hidden="true"
-				>
-					<div className="modal-dialog" role="document">
-						<div className="modal-content">
-							<div className="modal-header">
-								<h5 className="modal-title" id="exampleModalLabel">
-									Create Movie
-								</h5>
-								<button type="button" className="close" data-dismiss="modal" aria-label="Close">
-									<span aria-hidden="true">&times;</span>
-								</button>
-							</div>
-							<div className="modal-body">{this.props.children}</div>
-							<div className="modal-footer">
-								<button
-									ref={this.closeButton}
-									type="button"
-									className="btn btn-secondary"
-									data-dismiss="modal"
-								>
-									Close
-								</button>
-								{this.props.hasSubmit && (
-									<button onClick={this.submitModal} type="button" className="btn btn-primary">
-										Save changes
-									</button>
-								)}
-							</div>
-						</div>
-					</div>
-				</div>
-			</div>
-		);
-	}
-}
-
-export default Modal;
+export default ModalComponent;

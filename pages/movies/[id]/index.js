@@ -2,6 +2,7 @@ import { useRouter } from 'next/router';
 import { useDeleteMovie } from '../../../actions/movies';
 import MovieApi from '../../../lib/api/movies';
 import Link from 'next/link';
+import { toast } from 'react-toastify';
 
 const Movie = ({ movie }) => {
 	const router = useRouter();
@@ -9,40 +10,42 @@ const Movie = ({ movie }) => {
 	const [ deleteMovie, { error } ] = useDeleteMovie();
 
 	const handleDeleteMovie = async (id) => {
-		await deleteMovie(id).then(() => {
-			router.push('/');
-		});
+		if (confirm(`Are you sure you want to delete ${movie.name}`)) {
+			toast.success(`${movie.name} has been deleted!`);
+			await deleteMovie(id).then((movies) => {
+				router.push('/');
+			});
+		}
 	};
 	return (
 		<div className="container">
-			<div className="jumbotron">
-				<h1 className="display-4">{movie.name}</h1>
-				<p className="lead">{movie.description}</p>
-				<hr className="my-4" />
+			<div className="jumbotron text-center">
+				<h4 className="card-title h3 pb-2">
+					<h1 className="display-4">{`${movie.name}  ${movie.releaseYear}`}</h1>
+				</h4>
+				<div className="view overlay my-4">
+					<img src={movie.cover} className="img-fluid" alt={`${movie.name} image`} />
+				</div>
+				<p className="card-text">{movie.description}</p>
+				<br />
+				<p className="card-text">{movie.longDesc}</p>
+				<hr className="my-4" /> <h5>Movie Genre</h5>
 				<p>{movie.genre}</p>
 				<button
-					onClick={(e) => handleDeleteMovie(movie._id)}
-					className="btn btn-danger btn-lg mr-1"
+					onClick={() => handleDeleteMovie(movie._id)}
+					className="btn btn-danger  mr-1"
 					href="#"
 					role="button"
 				>
 					Delete
 				</button>
 				<Link href="/movies/[id]/edit" as={`/movies/${id}/edit`}>
-					<button className="btn btn-warning btn-lg" href="#" role="button">
+					<button className="btn  btn-warning" href="#" role="button">
 						Edit
 					</button>
 				</Link>
 			</div>
-			<p className="desc-text">{movie.longDescription}</p>
 			{error && <div className="alert alert-danger mt-2">{error}</div>}
-			<style>
-				{`
-                .desc-text{
-                    font-size:21px;
-                    }
-                `}
-			</style>
 		</div>
 	);
 };

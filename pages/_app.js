@@ -4,6 +4,7 @@ import Navbar from '../components/navbar';
 import Footer from '../components/footer';
 
 import '../styles/index.scss';
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 class MovieApp extends App {
 	static async getInitialProps(appContext) {

@@ -1,30 +1,43 @@
 import { useRouter } from 'next/router';
-import React, { useRef } from 'react';
+import React, { useState } from 'react';
 
-import ModalX from './modal';
+import Modal from './modal';
 import MovieCreateForm from './movieCreateForm';
 import { useCreateMovie } from '../actions/movies';
+import { toast } from 'react-toastify';
 const SideMenu = (props) => {
+	toast.configure();
 	const { categories } = props;
-	let modal = useRef(null);
-
 	const router = useRouter();
 	const [ createMovie, { data, loading, error } ] = useCreateMovie();
+	const [ modal, setModal ] = useState(false);
+
+	const toggle = () => setModal(!modal);
+
 	const handleCreateMovie = (movie) => {
 		createMovie(movie).then((movies) => {
-			modal.closeModal();
+			setModal(!modal);
+			toast.success(` ${movie.name} has been created`, {
+				position: 'top-right',
+				autoClose: 5000,
+				hideProgressBar: false,
+				closeOnClick: true,
+				pauseOnHover: true,
+				draggable: true,
+				progress: undefined
+			});
 			router.push('/');
 		});
 	};
 
 	return (
 		<div>
-			<ModalX ref={(ele) => (modal = ele)} hasSubmit={false}>
+			<Modal toggle={toggle} modal={modal} buttonLabel="Create Movie" hasSubmit={false}>
 				<MovieCreateForm handleFormSubmit={handleCreateMovie} />
 				{error && <div className="alert alert-danger mt-2">{error}</div>}
-			</ModalX>
+			</Modal>
 
-			<h1 className="my-4">{props.appName}</h1>
+			<h2 className="my-3">{props.appName}</h2>
 			<div className="list-group">
 				{categories.map((category) => (
 					<a

@@ -3,6 +3,7 @@ import Router from 'next/router';
 import MovieCreateForm from '../../../components/movieCreateForm';
 import { useGetMovie, useUpdateMovie } from '../../../actions/movies';
 import { useRouter } from 'next/router';
+import { toast } from 'react-toastify';
 
 const EditMovie = () => {
 	const router = useRouter();
@@ -11,6 +12,7 @@ const EditMovie = () => {
 
 	const handleUpdateMovie = async (movie) => {
 		await updateMovie(router.query.id, movie);
+		toast.success('Portfolio has been updated!', { autoClose: 2000 });
 		Router.push('/movies/[id]', `/movies/${movie._id}`);
 	};
 	return (
@@ -19,6 +21,7 @@ const EditMovie = () => {
 			{initialData && (
 				<MovieCreateForm initialData={initialData} handleFormSubmit={handleUpdateMovie} submitButton="Update" />
 			)}
+			{updateError && <div className="alert alert-danger mt-2">{updateError}</div>}
 		</div>
 	);
 };

@@ -7,6 +7,7 @@ class MovieList extends Component {
 		}
 		return text;
 	};
+
 	renderMovies(movies) {
 		return movies.map((movie) => (
 			<div key={movie._id} className="col-lg-4 col-md-6 mb-4">
@@ -27,7 +28,7 @@ class MovieList extends Component {
 						<p className="card-text">{this.shorten(movie.description, 150)}</p>
 					</div>
 					<div className="card-footer">
-						<small className="text-muted">&#9733; &#9733; &#9733; &#9733; &#9734;</small>
+						<small className="text-muted">Movie rating: {movie.rating}</small>
 					</div>
 				</div>
 			</div>

@@ -20,18 +20,19 @@ const Home = ({ movies, categories, images }) => {
 			return movie.genre && movie.genre.includes(filter);
 		});
 	};
+
 	return (
 		<div>
 			<div className="home-page">
 				<div className="container">
 					<div className="row">
-						<div className="col-lg-3">
+						<div className="col-lg-3" style={{ marginTop: 25 }}>
 							{
 								<SideMenu
 									activeCategory={filter}
 									changeCategory={changeCategory}
 									categories={categories}
-									appName={'Movie DB'}
+									appName={'Movie Database'}
 								/>
 							}
 						</div>
