@@ -9,43 +9,43 @@ const Movie = ({ movie }) => {
 	const { id } = router.query;
 	const [ deleteMovie, { error } ] = useDeleteMovie();
 
-	const handleDeleteMovie = async (id) => {
-		if (confirm(`Are you sure you want to delete ${movie.name}`)) {
-			toast.success(`${movie.name} has been deleted!`);
+	const handleDeleteMovie = async (id, name) => {
+		if (confirm(`Are you sure you want to delete ${name}`)) {
+			toast.success(`${name} has been deleted!`);
 			await deleteMovie(id).then((movies) => {
 				router.push('/');
 			});
 		}
 	};
 	return (
-		<div className="container">
-			<div className="jumbotron text-center">
-				<h4 className="card-title h3 pb-2">
-					<h1 className="display-4">{`${movie.name}  ${movie.releaseYear}`}</h1>
+		<div className='container'>
+			<div className='jumbotron text-center'>
+				<h4 className='card-title h3 pb-2'>
+					<h1 className='display-4'>{`${movie.name}  ${movie.releaseYear}`}</h1>
 				</h4>
-				<div className="view overlay my-4">
-					<img src={movie.cover} className="img-fluid" alt={`${movie.name} image`} />
+				<div className='view overlay my-4'>
+					<img src={movie.cover} className='img-fluid' alt={`${movie.name} image`} />
 				</div>
-				<p className="card-text">{movie.description}</p>
+				<p className='card-text'>{movie.description}</p>
 				<br />
-				<p className="card-text">{movie.longDesc}</p>
-				<hr className="my-4" /> <h5>Movie Genre</h5>
+				<p className='card-text'>{movie.longDesc}</p>
+				<hr className='my-4' /> <h5>Movie Genre</h5>
 				<p>{movie.genre}</p>
 				<button
-					onClick={() => handleDeleteMovie(movie._id)}
-					className="btn btn-danger  mr-1"
-					href="#"
-					role="button"
+					onClick={() => handleDeleteMovie(movie._id, movie.name)}
+					className='btn btn-danger  mr-1'
+					href='#'
+					role='button'
 				>
 					Delete
 				</button>
-				<Link href="/movies/[id]/edit" as={`/movies/${id}/edit`}>
-					<button className="btn  btn-warning" href="#" role="button">
+				<Link href='/movies/[id]/edit' as={`/movies/${id}/edit`}>
+					<button className='btn  btn-warning' href='#' role='button'>
 						Edit
 					</button>
 				</Link>
 			</div>
-			{error && <div className="alert alert-danger mt-2">{error}</div>}
+			{error && <div className='alert alert-danger mt-2'>{error}</div>}
 		</div>
 	);
 };
@@ -54,7 +54,9 @@ export async function getStaticPaths() {
 	const movies = json.data;
 	const paths = movies.map((movie) => {
 		return {
-			params: { id: movie._id }
+			params: {
+				id: movie._id,
+			},
 		};
 	});
 

@@ -5,14 +5,25 @@ body{
     min-height: 100vh;
     position: relative;
     margin: 0;
+    width: 100%;
+    
+}
+.base-page {
+    padding-top: 100px;
+    padding-bottom: 200px;
 }
 footer {
     position: absolute;
     bottom: 0;
     min-width: 100%;
+    font-size: 16px;
     
 }
 
+
+.bg-dark {
+    background-color: #000000!important;
+}
 
 
 

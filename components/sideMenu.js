@@ -5,6 +5,7 @@ import Modal from './modal';
 import MovieCreateForm from './movieCreateForm';
 import { useCreateMovie } from '../actions/movies';
 import { toast } from 'react-toastify';
+
 const SideMenu = (props) => {
 	toast.configure();
 	const { categories } = props;
@@ -13,6 +14,7 @@ const SideMenu = (props) => {
 	const [ modal, setModal ] = useState(false);
 
 	const toggle = () => setModal(!modal);
+	const capitalize = (string) => string[0].toUpperCase() + string.slice(1);
 
 	const handleCreateMovie = (movie) => {
 		createMovie(movie).then((movies) => {
@@ -24,7 +26,7 @@ const SideMenu = (props) => {
 				closeOnClick: true,
 				pauseOnHover: true,
 				draggable: true,
-				progress: undefined
+				progress: undefined,
 			});
 			router.push('/');
 		});
@@ -32,22 +34,25 @@ const SideMenu = (props) => {
 
 	return (
 		<div>
-			<Modal toggle={toggle} modal={modal} buttonLabel="Create Movie" hasSubmit={false}>
+			<Modal toggle={toggle} modal={modal} buttonLabel='Create Movie' hasSubmit={false}>
 				<MovieCreateForm handleFormSubmit={handleCreateMovie} />
-				{error && <div className="alert alert-danger mt-2">{error}</div>}
+				{error && <div className='alert alert-danger mt-2'>{error}</div>}
 			</Modal>
 
-			<h2 className="my-3">{props.appName}</h2>
-			<div className="list-group">
+			<h2 style={{ textAlign: 'center' }} className='my-3'>
+				{props.appName}
+			</h2>
+			<div className='container btn-group-vertical'>
 				{categories.map((category) => (
-					<a
+					<button
 						onClick={() => props.changeCategory(category)}
 						key={category.id}
-						href="#"
-						className={`list-group-item  ${props.activeCategory === category.name ? 'active' : ''}`}
+						className={`btn btn-secondary   ${props.activeCategory === category.name
+							? 'btn btn-secondary active'
+							: ''}`}
 					>
-						{category.name}
-					</a>
+						{capitalize(category.name)}
+					</button>
 				))}
 			</div>
 		</div>

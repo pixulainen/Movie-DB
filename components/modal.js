@@ -6,7 +6,7 @@ const ModalComponent = (props) => {
 
 	return (
 		<div>
-			<Button block color="primary" size="lg" onClick={toggle}>
+			<Button block color='dark' size='lg' onClick={toggle}>
 				{buttonLabel}
 			</Button>
 			<Modal scrollable fade={true} isOpen={modal} toggle={toggle} className={className}>
@@ -14,11 +14,11 @@ const ModalComponent = (props) => {
 				<ModalBody>{props.children}</ModalBody>
 				<ModalFooter>
 					{props.hasSubmit && (
-						<Button color="primary" onClick={toggle}>
+						<Button color='primary' onClick={toggle}>
 							Sumbit
 						</Button>
 					)}
-					<Button color="secondary" onClick={toggle}>
+					<Button color='secondary' onClick={toggle}>
 						Cancel
 					</Button>
 				</ModalFooter>

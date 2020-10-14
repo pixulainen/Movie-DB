@@ -23,10 +23,10 @@ const Home = ({ movies, categories, images }) => {
 
 	return (
 		<div>
-			<div className="home-page">
-				<div className="container">
-					<div className="row">
-						<div className="col-lg-3" style={{ marginTop: 25 }}>
+			<div className='home-page'>
+				<div className='container'>
+					<div className='row'>
+						<div className='col-lg-3' style={{ marginTop: 25 }}>
 							{
 								<SideMenu
 									activeCategory={filter}
@@ -36,10 +36,10 @@ const Home = ({ movies, categories, images }) => {
 								/>
 							}
 						</div>
-						<div className="col-lg-9">
+						<div className='col-lg-9'>
 							<Carousel images={images} />
 							<h3>Displaying {filter} movies</h3>
-							<div className="row">
+							<div className='row'>
 								<MovieList movies={filterMovies(movies) || []} />
 							</div>
 						</div>
@@ -57,15 +57,15 @@ export async function getStaticProps() {
 	const images = movies.map((movie) => ({
 		id: `image + ${movie._id}`,
 		url: movie.cover,
-		name: movie.name
+		name: movie.name,
 	}));
 	return {
 		props: {
 			movies,
 			images,
-			categories
+			categories,
 		},
-		unstable_revalidate: 100
+		unstable_revalidate: 100,
 	};
 }
 

@@ -12,16 +12,16 @@ const EditMovie = () => {
 
 	const handleUpdateMovie = async (movie) => {
 		await updateMovie(router.query.id, movie);
-		toast.success('Portfolio has been updated!', { autoClose: 2000 });
+		toast.success('Movie has been updated!', { autoClose: 2000 });
 		Router.push('/movies/[id]', `/movies/${movie._id}`);
 	};
 	return (
-		<div className="container">
+		<div className='container'>
 			<h1>Edit Movie</h1>
 			{initialData && (
-				<MovieCreateForm initialData={initialData} handleFormSubmit={handleUpdateMovie} submitButton="Update" />
+				<MovieCreateForm initialData={initialData} handleFormSubmit={handleUpdateMovie} submitButton='Update' />
 			)}
-			{updateError && <div className="alert alert-danger mt-2">{updateError}</div>}
+			{updateError && <div className='alert alert-danger mt-2'>{updateError}</div>}
 		</div>
 	);
 };
